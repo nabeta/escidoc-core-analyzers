@@ -70,12 +70,12 @@ public class XmlWhitespaceTokenizer extends CharTokenizer {
      * \u003f ?
      * 
      * @param c
-     *            character
+     *            code point
      * @return true if whitespace-character, else false.
      * 
      */
     @Override
-    protected boolean isTokenChar(final char c) {
+    protected boolean isTokenChar(final int c) {
         if (Character.isWhitespace(c) || c == '\u003c' || c == '\u003e'
             || c == '\u0026' || c == '\u002e' || c == '\u002c'
             || c == '\u003b' || c == '\u0021' || c == '\u003f') {
