@@ -6,7 +6,10 @@
 	<property name="src.dir" value="src" />
 	<property name="dist.dir" value="dist" />
 	<property name="lib.dir" value="lib" />
-	<property name="classes.dir" value="${build.dir}/classes" />
+  <property name="bin.dir" value="bin" />
+  <property name="classes.dir" value="${build.dir}/classes" />
+  <property name="sources.dir" value="sources" />
+  <property name="project.name" value="escidoc-analyzers" />
 
 	<path id="classpath">
 		<pathelement path="${classpath}" />
@@ -41,9 +44,9 @@
   	</target>
 
   	<!-- Archiv erzeugen -->
-  	<target name="jar" depends="compile" description="Generates escidoc-analyzers.jar in the 'dist' directory.">
+  	<target name="jar" depends="compile, sources" description="Generates escidoc-analyzers.jar in the 'dist' directory.">
      	<!-- Exclude unit tests from the final JAR file -->
-     	<jar jarfile="${dist.dir}/escidoc-analyzers.jar" 
+     	<jar jarfile="${dist.dir}/${project.name}.jar" 
 			basedir="${classes.dir}"/>
 		<delete includeEmptyDirs="true">
 			<fileset dir="${build.dir}">
@@ -51,5 +54,26 @@
 			</fileset>
 		</delete>
   	</target>
+
+  <target name="sources" description="Pack sources for download.">
+    <delete dir="${sources.dir}"/>
+      <mkdir dir="${sources.dir}"/>
+      <mkdir dir="${sources.dir}/${project.name}"/>
+  <copy todir="${sources.dir}/${project.name}">
+    <fileset dir=".">
+        <exclude name="${build.dir}/*/**"/>
+        <exclude name="${bin.dir}/*/**"/>
+        <exclude name="${dist.dir}/*/**"/>
+        <exclude name="${sources.dir}/**"/>
+        <exclude name="${docu.dir}/**"/>
+        <exclude name="**/.svn"/>
+        <exclude name=".classpath"/>
+        <exclude name=".project"/>
+    </fileset>
+  </copy>
+      <zip zipfile="${dist.dir}/${project.name}-sources.zip"
+           basedir="${sources.dir}/${project.name}" includes="**"/>
+    <delete dir="${sources.dir}"/>
+  </target>
 
 </project>
