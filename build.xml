@@ -18,6 +18,8 @@
 
 	<!-- Cleans the output folders -->
 	<target name="clean" description="Cleans the output folders">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
 		<delete includeEmptyDirs="true">
 			<fileset dir="${build.dir}">
 				<include name="**/*"/>
