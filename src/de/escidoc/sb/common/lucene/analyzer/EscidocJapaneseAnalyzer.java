@@ -40,6 +40,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.WhitespaceTokenizer;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
 
 /**
  * Analyzer for all escidoc lucene indices, japanese language.
@@ -120,8 +121,14 @@ public class EscidocJapaneseAnalyzer extends Analyzer {
         
         //Get Japanese Tokens
         JapaneseAnalyzer analyzer = 
-            new JapaneseAnalyzer(Constants.getPathToJapaneseAnalyzerConfig());
+            new JapaneseAnalyzer(Constants.LUCENE_VERSION);
         TokenStream japaneseTokens = analyzer.tokenStream("", reader1);
+    	if (analyzer != null) {
+    		try {
+    			analyzer.close();
+    		}
+    		catch (Exception e) {}
+    	}
         return japaneseTokens;
     }
 
