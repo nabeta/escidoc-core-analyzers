@@ -120,8 +120,14 @@ public class EscidocJapaneseAnalyzer extends Analyzer {
         
         //Get Japanese Tokens
         JapaneseAnalyzer analyzer = 
-            new JapaneseAnalyzer(Constants.getPathToJapaneseAnalyzerConfig());
+            new JapaneseAnalyzer(Constants.LUCENE_VERSION);
         TokenStream japaneseTokens = analyzer.tokenStream("", reader1);
+    	if (analyzer != null) {
+    		try {
+    			analyzer.close();
+    		}
+    		catch (Exception e) {}
+    	}
         return japaneseTokens;
     }
 
