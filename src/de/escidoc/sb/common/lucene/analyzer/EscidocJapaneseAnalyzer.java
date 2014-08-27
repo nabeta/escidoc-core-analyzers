@@ -39,6 +39,7 @@ import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.WhitespaceTokenizer;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
+import org.apache.lucene.analysis.ja.JapaneseWidthFilter;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.util.Version;
 
@@ -120,9 +121,9 @@ public class EscidocJapaneseAnalyzer extends Analyzer {
         }
         
         //Get Japanese Tokens
-        JapaneseAnalyzer analyzer = 
-            new JapaneseAnalyzer(Version.LUCENE_34);
+        JapaneseAnalyzer analyzer = new JapaneseAnalyzer(Version.LUCENE_34);
         TokenStream japaneseTokens = analyzer.tokenStream("", reader1);
+        japaneseTokens = new JapaneseWidthFilter(japaneseTokens);
     	if (analyzer != null) {
     		try {
     			analyzer.close();
